@@ -1,0 +1,11 @@
+# Adonis directory for storing tmp files
+tmp
+
+# The development sqlite file
+database/*.mysql
+
+# dependencies
+node_modules
+
+# misc
+.env
