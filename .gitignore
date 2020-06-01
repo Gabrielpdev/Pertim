@@ -2,7 +2,7 @@
 backend/tmp
 
 # The development sqlite file
-database/*.mysql
+backend/database/*.mysql
 
 # dependencies
 backend/node_modules
