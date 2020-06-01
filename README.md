@@ -2,8 +2,8 @@
 Projeto pessoal, Pertim, uma aplicação para os comerciantes pequenos, que durante a pendemia do covid-19, afeta seus ganhos. 
 (Em Construção)
 
-
 * Backend feito em AdonisJS. 
+* Frontend em construção ReactJs. 
 
 ### Adonis API application
 
