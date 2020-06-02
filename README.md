@@ -1,5 +1,5 @@
 ﻿# Pertim
-Projeto pessoal, Pertim, uma aplicação para os comerciantes pequenos, que durante a pendemia do covid-19, afeta seus ganhos. 
+Pertim, uma aplicação feita para os pequenos comércios. É como um radar, onde você encontra os pequenos comércios perto de sua localidade, com os preços de seus produtos e um contato para fazerem entrega em sua casa.
 (Em Construção)
 
 * Backend feito em AdonisJS. 
