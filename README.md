@@ -1,35 +1,37 @@
 ﻿# Pertim
-Pertim, uma aplicação feita para os pequenos comércios. É como um radar, onde você encontra os pequenos comércios perto de sua localidade, com os preços de seus produtos e um contato para fazerem entrega em sua casa.
-(Em Construção)
+
 
 * Backend feito em AdonisJS. 
 * Frontend em construção ReactJs. 
 
-### Adonis API application
+### 📜 Sobre
+Pertim, uma aplicação feita para os pequenos comércios. É como um radar, onde você encontra os pequenos comércios perto de sua localidade, com os preços de seus produtos e um contato para fazerem entrega em sua casa.Sendo construído com as tecnologias mais populares do mundo Javascript, este repositório contem uma API REST (Node.js) como backend, uma aplicação em ReactJS como frontend e um app mobile em React Native.
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+A aplicação em **Node.js** (backend) é uma **API REST** escrita em **Node.JS** que serve dados ao frontend e ao mobile.
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+A aplicação em **ReactJS** (frontend) é para o dono do comério. Assim podendo cadastrar sua localidade, horário de funcionamento e produtos disponíveis.
 
-#### Setup
+A aplicação em **React Native** é para o usuário, que pode ver quais comércios estão mais próximos de sua casa e assim entrar em contato para ser feita a entrega de um produto em sua casa.
 
-Use the adonis command to install the blueprint
+### 🔽 Requisitos
+1. Ter o **NodeJs** e o **Yarn** instalado
+2. Um dispositivo ou emulador **Android** conectado ao computador
 
-```bash
-adonis new {name file} --api-only --yarn
-```
+### :rocket: Começando
+1. ``git clone https://github.com/Gabrielpdev/FastFeet.git``
+2. ``cd Pertim``
 
-or manually clone the repo and then run `yarn`.
+### :rocket: Iniciando com o backend
+1. ``cd Backend``
+2. ``yarn``
+3. ``Criar o arquivo .env com base no .env.example``
+4. ``adonis migration:run``
+6. ``adonis serve --dev``
 
-
-#### Migrations
-
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
-```
+### 🧰  Ferramentas utilizadas
+- 🔼 **AdonisJs** - Framework mais robusto com uma série de funcionalidades prontas.
+- ⚛️ **ReactJs** - Biblioteca Javascript para criar interfaces de usuário.
+- ⚛️ **React Native** - Framework para criar apps nativos usando React.
+- 💅 **Styled Components** - Biblioteca Javascript pra estilizar componentes.
+- 🔁 **Redux** - Biblioteca JavaScript de código aberto para gerenciar o estado do aplicativo.
+- 🔂 **Redux Saga** - Biblioteca Javascript que torna os efeitos colaterais do aplicativo mais faceis de gerenciar.
