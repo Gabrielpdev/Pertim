@@ -18,7 +18,7 @@ A aplicação em **React Native** é para o usuário, que pode ver quais comérc
 2. Um dispositivo ou emulador **Android** conectado ao computador
 
 ### :rocket: Começando
-1. ``git clone https://github.com/Gabrielpdev/FastFeet.git``
+1. ``git clone https://github.com/Gabrielpdev/Pertim.git``
 2. ``cd Pertim``
 
 ### :rocket: Iniciando com o backend
