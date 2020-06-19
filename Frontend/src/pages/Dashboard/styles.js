@@ -8,6 +8,7 @@ export const Container = styled.div`
   background: #fff;
   border-radius: 25px;
 
+
   display: flex;
   justify-content: space-between;
 
@@ -112,15 +113,71 @@ export const Container = styled.div`
       }
     }
 
-    > span {
+    >strong {
       margin-bottom: 15px;
       text-align: center;
       color: #37759e;
-      font-size: 14px;
+      font-size: 16px;
     }
-    > span + span {
+    >span + span {
       margin-bottom: 0px;
     }
+
+    div.empresaInfo{
+      display:flex;
+      justify-content: space-between;
+      flex-direction: row;
+
+      margin-bottom: 15px ;
+
+      span {
+        color: #37759e;
+        font-size: 12px;
+        margin-bottom: 7px;
+      }
+
+      div.esquerda {
+        display:flex;
+        flex-direction: column;
+        margin-right:30px;
+
+        strong {
+          display:flex;
+          text-align: center;
+          color: #37759e;
+        }
+      }
+
+      div.meio {
+        display:flex;
+        flex-direction: column;
+        margin-right:30px;
+
+        strong {
+          display:flex;
+          text-align: center;
+          color: #37759e;
+        }
+      }
+
+      div.direita {
+        display:flex;
+        flex-direction: column;
+
+
+        strong {
+          text-align: center;
+          color: #37759e;
+        }
+
+        li {
+          font-weight: 400;
+          font-size: 14px;
+          text-align: left;
+        }
+      }
+    }
+
 
     div.informacoes {
       margin: 10px 0;

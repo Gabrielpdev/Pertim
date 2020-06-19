@@ -2,6 +2,7 @@ import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import api from '~/services/api';
+import history from '~/services/history';
 
 import {
   updateProfileFailure,
@@ -11,23 +12,40 @@ import {
 
 export function* updateProfile({ payload }) {
   try {
-    const { name, email, avatar_id, ...rest } = payload.data;
+    const { usuarioId, data } = payload.data;
+
+    const { nome, email, celular, password, confirmPassword } = data;
+
+    if (password !== '' && password === confirmPassword) {
+      const profile = {
+        nome,
+        email,
+        celular,
+        password,
+      };
+
+      const response = yield call(api.put, `usuarios/${usuarioId}`, profile);
+
+      yield put(updateProfileSuccess(response.data));
+
+      toast.success('Perfil atualizado com sucesso!');
+      return history.push('/dashboard');
+    }
 
     const profile = {
-      name,
+      nome,
       email,
-      avatar_id,
-      ...(rest.oldPassword ? rest : {}),
+      celular,
     };
 
-    const response = yield call(api.put, 'users', profile);
-
+    const response = yield call(api.put, `usuarios/${usuarioId}`, profile);
     yield put(updateProfileSuccess(response.data));
 
     toast.success('Perfil atualizado com sucesso!');
+    return history.push('/dashboard');
   } catch (err) {
-    toast.error('Erro ao atualizar perfil, confira seus dados!');
     yield put(updateProfileFailure());
+    return toast.error('Erro ao atualizar perfil, confira seus dados!');
   }
 }
 
@@ -81,7 +99,20 @@ export function* updateEmpresa({ payload }) {
   }
 }
 
+export function* updateProduto({ payload }) {
+  const { usuarioId } = payload;
+
+  try {
+    const empresa = yield call(api.get, `empresa-proprietario/${usuarioId}`);
+
+    yield put(UpdateEmpresaSuccess(empresa.data));
+  } catch (err) {
+    toast.error('Falha ao atualizar produtos');
+  }
+}
+
 export default all([
   takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile),
   takeLatest('@user/UPDATE_EMPRESA_REQUEST', updateEmpresa),
+  takeLatest('@user/UPDATE_PRODUTO_REQUEST', updateProduto),
 ]);

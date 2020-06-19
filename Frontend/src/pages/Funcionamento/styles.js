@@ -3,7 +3,7 @@ import PerfectScrollBar from 'react-perfect-scrollbar';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  max-width: 700px;
+  max-width: 900px;
   max-height: 700px;
 
   margin: 50px auto;
@@ -27,6 +27,28 @@ export const Container = styled.div`
     padding: 20px;
 
     div.direita {
+      > strong {
+        display: block;
+
+        text-align: center;
+        margin-bottom: 10px;
+        text-align: center;
+
+        color: #0b639e;
+        font-size: 20px;
+      }
+    }
+
+    div.esquerda {
+      > strong {
+        display: block;
+
+        text-align: center;
+        margin-bottom: 10px;
+
+        color: #0b639e;
+        font-size: 20px;
+      }
     }
   }
   div.footer {
@@ -48,7 +70,7 @@ export const Button = styled.button`
   padding: 3px 10px;
   border: 0;
   background: #9ed8ff;
-  border-radius: 10px;
+  border-radius: 15px;
 
   color: #0b639e;
 
@@ -65,13 +87,13 @@ export const AddButton = styled.button`
   border: 0;
   background: #9ed8ff;
 
-  width: 30px;
+  width: 220px;
   height: 30px;
   border-radius: 15px;
 
   color: #0b639e;
 
-  margin: 0 auto 10px 0;
+  margin: 10px 0 0 auto;
 
   &:hover {
     background: ${darken(0.05, '#9ed8ff')};
@@ -88,16 +110,10 @@ export const Funionamentos = styled(PerfectScrollBar)`
   border-radius: 5px;
 
   height: 240px;
-  width: 90%;
+  width: 390px;
 
   margin: auto;
 
-  > strong {
-    text-align: center;
-
-    color: #0b639e;
-    font-size: 20px;
-  }
   > div {
     display: flex;
     flex-direction: row;
@@ -121,6 +137,48 @@ export const Funionamentos = styled(PerfectScrollBar)`
 
       &:hover {
         background: ${darken(0.05, '#9ed8ff')};
+      }
+    }
+
+    > button.funcionamentos {
+      display: flex;
+      flex-direction: column;
+
+      text-align: left;
+
+      background: #dbefff;
+      border-radius: 5px;
+
+      margin: 5px 20px;
+      padding: 10px;
+
+      width: 390px;
+
+      font-size: 20px;
+
+      &:hover {
+        background: #fff;
+      }
+    }
+    > button.selecionado {
+      display: flex;
+      flex-direction: column;
+
+      text-align: left;
+
+      background: #fff;
+      border-radius: 5px;
+      border: 1px solid #0b639e;
+
+      margin: 5px 20px;
+      padding: 10px;
+
+      width: 390px;
+
+      font-size: 20px;
+
+      &:hover {
+        background: #fff;
       }
     }
 

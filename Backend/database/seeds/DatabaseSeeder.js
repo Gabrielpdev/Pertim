@@ -16,6 +16,10 @@ const Dia = use('App/Models/Dia')
 
 class DatabaseSeeder {
   async run () {
+    const existe = await Dia.query().where('nome', 'Domingo').first()
+    if (existe) {
+      return
+    }
     await Dia.create(
       {
         nome: 'Domingo'

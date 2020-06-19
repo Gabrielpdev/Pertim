@@ -10,8 +10,10 @@ const Produto = use('App/Models/Produto')
  * Resourceful controller for interacting with produtos
  */
 class ProdutoController {
-  async index () {
-    const produto = await Produto.query().with('empresa').fetch()
+  async index ({ request }) {
+    const { page = 1 } = request.get()
+
+    const produto = await Produto.query().with('empresa').paginate(page, 5)
 
     return produto
   }
@@ -19,11 +21,9 @@ class ProdutoController {
   async store ({ request }) {
     const data = request.only(['nome', 'valor', 'valor_promocional', 'informacao', 'empresa_id'])
 
-    const produto = await Produto.create(data)
+    await Produto.create(data)
 
-    await produto.load('empresa')
-
-    return produto
+    return data
   }
 
   async show ({ params }) {

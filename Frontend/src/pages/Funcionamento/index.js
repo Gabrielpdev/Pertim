@@ -1,139 +1,129 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from '@rocketseat/unform';
 import { MdArrowBack, MdCheck, MdAdd, MdDelete } from 'react-icons/md';
+import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 
 import history from '~/services/history';
 import api from '~/services/api';
 
-import Select from '~/components/Select';
-
 import { Container, Funionamentos, Button, AddButton } from './styles';
 
+import { UpdateEmpresaRequest } from '~/store/modules/user/actions';
+
 function Funcionamento() {
+  const empresaID = useSelector((state) => state.user.empresa.id);
   const usuarioFun = useSelector((state) => state.user.empresa.funcionamento);
 
-  const [dias, setDias] = useState([]);
-  const [diaSelecionado, setDiaSelecionado] = useState();
-  const [horairos, setHorarios] = useState([]);
-  const [horarioSelecionado, setHorarioSelecionado] = useState();
   const [funcionamentosDias, setFuncionamentosDias] = useState([]);
-  const [funcionamentoSelecionado, setFuncionamentoSelecionado] = useState();
+  const [funcionamentoSelecionado, setFuncionamentoSelecionado] = useState(
+    usuarioFun
+  );
 
-  const [funcionamentos, setFuncionamentos] = useState(usuarioFun);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function carregarDiasEHorairos() {
-      const responseDias = await api.get('dias');
-      const responseHorarios = await api.get('funcionamentos');
       const responseFuncionamentosDias = await api.get('funcionamento-dia');
 
       setFuncionamentosDias(responseFuncionamentosDias.data);
-      setDias(responseDias.data);
-      setHorarios(responseHorarios.data);
     }
     carregarDiasEHorairos();
   }, []);
 
-  const OpcoesHorario = useMemo(() => {
-    return horairos.map((horario) => ({
-      value: horario,
-      label: `${horario.inicio} - ${horario.fim}`,
-    }));
-  }, [horairos]);
+  function handleSelectItem(id, dia) {
+    const alreadySelected = funcionamentoSelecionado.findIndex(
+      (item) => item.id === id
+    );
 
-  const OpcoesDia = useMemo(() => {
-    return dias.map((dia) => ({
-      value: dia,
-      label: dia.nome,
-    }));
-  }, [dias]);
+    if (alreadySelected >= 0) {
+      const filteredItens = funcionamentoSelecionado.filter(
+        (item) => item.id !== id
+      );
 
-  const OpcoesFuncionamento = useMemo(() => {
-    return funcionamentosDias.map((funcionamento) => ({
-      value: funcionamento,
-      label: `${funcionamento.dia.nome} --
-      ${funcionamento.funcionamento.inicio} -
-      ${funcionamento.funcionamento.fim} `,
-    }));
-  }, [funcionamentosDias]);
+      setFuncionamentoSelecionado(filteredItens);
+    } else {
+      const checarDia = funcionamentoSelecionado.find(
+        (item) => item.dia_id === dia
+      );
 
-  const TrocarHorario = (selectedOption) => {
-    const { value } = selectedOption;
+      if (checarDia) {
+        toast.error('Dia já usado pela empresa!');
+      } else if (funcionamentoSelecionado.length < 7) {
+        const filteredItens = funcionamentosDias.find((item) => item.id === id);
 
-    setHorarioSelecionado(value.id);
-  };
-
-  const TrocarDia = (selectedOption) => {
-    const { value } = selectedOption;
-
-    setDiaSelecionado(value.id);
-  };
-
-  const TrocarFuncionamento = (selectedOption) => {
-    const { value } = selectedOption;
-
-    setFuncionamentoSelecionado(value.id);
-  };
-
-  async function deletarFuncionamento(id) {
-    for (let i = 0; i < funcionamentos.length; i++) {
-      console.tron.log(funcionamentos[i]);
+        setFuncionamentoSelecionado([
+          ...funcionamentoSelecionado,
+          filteredItens,
+        ]);
+      }
     }
   }
 
-  async function handleSubmit(data) {
-    // if (!horarioSelecionado || !diaSelecionado) {
-    //   console.tron.log('Dados incompletos');
-    // } else {
-    //   data.horario = horarioSelecionado;
-    //   data.dia = diaSelecionado;
-    //   data.funcionamento = funcionamentoSelecionado;
-    // }
+  async function deletarFuncionamento(id) {
+    const filteredItens = funcionamentoSelecionado.filter(
+      (item) => item.id !== id
+    );
+
+    setFuncionamentoSelecionado(filteredItens);
+  }
+
+  async function handleSubmit() {
+    try {
+      const funcionamentos = [];
+      for (let i = 0; i < funcionamentoSelecionado.length; i += 1) {
+        funcionamentos.push(funcionamentoSelecionado[i].id);
+      }
+
+      dispatch(
+        UpdateEmpresaRequest({
+          id: empresaID,
+          funcionamento_id: funcionamentos,
+        })
+      );
+      history.push('/dashboard');
+      toast.success('Funcionamentos cadastrados');
+    } catch (err) {
+      toast.error('Erro ao cadastrar funcionamento!');
+    }
   }
 
   return (
     <Container>
-      <strong>Cadastro de Funcionalidade</strong>
+      <strong>Funcionamento</strong>
       <Form onSubmit={handleSubmit}>
         <div className="esquerda">
-          <AddButton type="button" onClick={() => {}}>
-            <MdAdd size={20} color="#37759e" />
-          </AddButton>
-          <Select
-            visivel
-            label="Horários Cadastrados:"
-            value={horarioSelecionado}
-            onChange={TrocarHorario}
-            options={OpcoesHorario}
-            placeholder="Selecione o horário"
-            defaultValue={undefined}
-          />
-          <Select
-            visivel
-            label="Dias Cadastrados:"
-            value={diaSelecionado}
-            onChange={TrocarDia}
-            options={OpcoesDia}
-            placeholder="Selecione o dia"
-            defaultValue={undefined}
-          />
-        </div>
-        <div className="direita">
-          <Select
-            visivel
-            funcionamento
-            label="Funcionamentos Cadastrados:"
-            value={funcionamentoSelecionado}
-            onChange={TrocarFuncionamento}
-            options={OpcoesFuncionamento}
-            placeholder="Selecione o horário de funcionamento"
-            defaultValue={undefined}
-          />
+          <strong>Funcionamentos cadastrados</strong>
           <Funionamentos>
-            <strong>Funcionamento da empresa</strong>
-            {funcionamentos.map((funcionamento) => (
+            {funcionamentosDias.map((funcionamento) => (
+              <div>
+                <button
+                  onClick={() =>
+                    handleSelectItem(funcionamento.id, funcionamento.dia_id)
+                  }
+                  type="button"
+                  className={
+                    funcionamentoSelecionado.find(
+                      (func) => func.id === funcionamento.id
+                    )
+                      ? 'selecionado'
+                      : 'funcionamentos'
+                  }
+                >
+                  {funcionamento.dia.nome} --{' '}
+                  {funcionamento.funcionamento.inicio} -{' '}
+                  {funcionamento.funcionamento.fim}
+                </button>
+              </div>
+            ))}
+          </Funionamentos>
+        </div>
+
+        <div className="direita">
+          <strong>Funcionamento da empresa</strong>
+          <Funionamentos>
+            {funcionamentoSelecionado.map((funcionamento) => (
               <div>
                 <text>
                   {funcionamento.dia.nome} --{' '}
@@ -150,7 +140,13 @@ function Funcionamento() {
             ))}
           </Funionamentos>
         </div>
-        <div />
+        <AddButton
+          type="button"
+          onClick={() => history.push('/funcionamento/add')}
+        >
+          <MdAdd size={20} color="#37759e" />
+          <strong>Adicionar funcionamentos</strong>
+        </AddButton>
         <div className="footer">
           <Button type="button" onClick={() => history.push('/dashboard')}>
             <MdArrowBack size={20} color="#37759e" />

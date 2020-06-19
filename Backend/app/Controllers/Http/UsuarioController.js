@@ -55,7 +55,7 @@ class UsuarioController {
 
   async update ({ params, request }) {
     const usuario = await Usuario.findOrFail(params.id)
-    const data = request.only(['nome', 'celular', 'email'])
+    const data = request.only(['nome', 'celular', 'email', 'password'])
     const { endereco_id } = request.all()
 
     if (endereco_id) {

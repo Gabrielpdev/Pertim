@@ -42,7 +42,6 @@ class DistanciaController {
       const retorno = [null]
       retorno.splice(0, 1)
 
-      console.log(distancia.distancia.length)
       for (var i = 0; i < distancia.distancia.length; i++) {
         const empresa = await Empresa.findOrFail(distancia.empresa_id[i]).where('situacao', 'ATIVA')
 
@@ -55,6 +54,8 @@ class DistanciaController {
       .with('empresa.produto')
       .where('usuario', false)
       .paginate(page)
+
+    console.log(endereco)
 
     const lat2 = endereco.rows.map(data => {
       return data.$attributes.latitude

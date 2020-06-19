@@ -40,7 +40,7 @@ class FuncionamentoDiaController {
 
   async update ({ params, request }) {
     const funcionamentoDia = await FuncionamentoDia.findOrFail(params.id)
-    const data = request.only(['inicio', 'fim'])
+    const data = request.only(['funcionamento_id', 'dia_id'])
 
     funcionamentoDia.merge(data)
 

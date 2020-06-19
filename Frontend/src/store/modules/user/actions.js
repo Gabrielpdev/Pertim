@@ -39,6 +39,13 @@ export function VincularEnderecoRequest(endereco) {
   };
 }
 
+export function UpdateProdutoRequest(usuarioId) {
+  return {
+    type: '@user/UPDATE_PRODUTO_REQUEST',
+    payload: { usuarioId },
+  };
+}
+
 export function UpdateEmpresaSuccess(empresa) {
   return {
     type: '@user/UPDATE_EMPRESA_SUCCESS',

@@ -8,10 +8,12 @@ const verificarDiaEntrega = require('../../../utils/verificarDiaEntrega')
 class EmpresaController {
   async index () {
     const empresa = await Empresa.query()
+      .where('situacao', 'ATIVA')
       .with('produto')
       .with('funcionamento.funcionamento')
       .with('funcionamento.dia')
-      .with('entrega')
+      .with('entrega.entrega')
+      .with('entrega.dia')
       .with('endereco')
       .fetch()
 
@@ -91,7 +93,7 @@ class EmpresaController {
 
     await empresa.save()
 
-    await empresa.loadMany(['funcionamento.funcionamento', 'funcionamento.dia', 'entrega', 'endereco', 'pagamento', 'produto', 'arquivo'])
+    await empresa.loadMany(['funcionamento.funcionamento', 'funcionamento.dia', 'entrega.entrega', 'entrega.dia', 'endereco', 'pagamento', 'produto', 'arquivo'])
 
     return empresa
   }

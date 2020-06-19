@@ -16,7 +16,7 @@ export default function user(state = INITIAL_SATE, action) {
         break;
       }
       case '@user/UPDATE_PROFILE_SUCCESS': {
-        draft.profile = action.payload.profile;
+        draft.profile = action.payload.empresa;
         break;
       }
       case '@user/VINCULAR_EMPRESA_REQUEST': {
