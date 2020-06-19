@@ -3,54 +3,47 @@ import PerfectScrollBar from 'react-perfect-scrollbar';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  max-width: 900px;
+  max-width: 700px;
   max-height: 700px;
 
   margin: 50px auto;
   background: #fff;
   border-radius: 25px;
 
-  padding: 10px 0;
+  padding: 10px 40px;
 
   text-align: center;
 
   > strong {
+    display: block;
+    margin-top: 20px;
+
     color: #0b639e;
     font-size: 25px;
   }
 
   > form {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 0 20px;
 
     padding: 20px;
+  }
+  div.adicionar {
+    width: 150px;
 
-    div.direita {
-      > strong {
-        display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        text-align: center;
-        margin-bottom: 10px;
-        text-align: center;
+    margin-right: auto;
 
-        color: #0b639e;
-        font-size: 20px;
-      }
-    }
-
-    div.esquerda {
-      > strong {
-        display: block;
-
-        text-align: center;
-        margin-bottom: 10px;
-
-        color: #0b639e;
-        font-size: 20px;
-      }
+    > strong {
+      color: #0b639e;
+      font-size: 15px;
     }
   }
+
   div.footer {
     width: 190px;
 
@@ -58,7 +51,7 @@ export const Container = styled.div`
     flex-direction: row;
     justify-content: space-between;
 
-    margin: 10px 20px 0 auto;
+    margin-left: auto;
   }
 `;
 
@@ -87,13 +80,13 @@ export const AddButton = styled.button`
   border: 0;
   background: #9ed8ff;
 
-  width: 220px;
-  height: 30px;
+  width: 160px;
+  height: 25px;
   border-radius: 15px;
 
   color: #0b639e;
 
-  margin: 10px 0 0 auto;
+  margin: 0 0 0 auto;
 
   &:hover {
     background: ${darken(0.05, '#9ed8ff')};

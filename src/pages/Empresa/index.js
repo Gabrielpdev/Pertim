@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import InputMask from 'react-input-mask';
 import * as Yup from 'yup';
@@ -70,15 +70,41 @@ function Empresa() {
     empresa === null ? undefined : empresa.instagram
   );
   const [bio, setBio] = useState(empresa === null ? undefined : empresa.bio);
+  const [pagamentos, setPagamentos] = useState([]);
+  const [pagamentoSelecionado, setPagamentoSelecionado] = useState(empresa === null ? undefined : empresa.pagamento);
 
-  console.tron.log(nome);
+  useEffect(() => {
+    async function loadPagamento(){
+      const response = await api.get('/tipo-pagamentos');
 
+      setPagamentos(response.data)
+    }
+    loadPagamento()
+  },[])
+
+  function handleSelectItem(pagamento) {
+    const alreadySelected = pagamentoSelecionado.findIndex((item) => item.id === pagamento.id);
+
+    if (alreadySelected >= 0) {
+      const filteredItens = pagamentoSelecionado.filter((item) => item.id !== pagamento.id);
+
+      setPagamentoSelecionado(filteredItens);
+    } else {
+      setPagamentoSelecionado([...pagamentoSelecionado, pagamento]);
+    }
+  }
   async function SubmitEmpresa(data) {
-    console.tron.log(data);
     if (empresa !== null) {
-      console.tron.log('empresa ja existe');
+      const pagamento_id = []
+
+      pagamentoSelecionado.map( pagamento => {
+        pagamento_id.push(pagamento.id)
+      })
       try {
-        dispatch(UpdateEmpresaRequest({ id: empresa.id, ...data }));
+        dispatch(UpdateEmpresaRequest({
+          id: empresa.id,
+          ...data,
+          pagamento_id }));
 
         history.push('/dashboard');
       } catch (err) {
@@ -88,10 +114,10 @@ function Empresa() {
       try {
         const response = await api.post('empresas', {
           ...data,
+          pagamento_id:pagamentoSelecionado,
           situacao: 'ATIVA',
           propietario_id: usuarioID,
         });
-        console.tron.log('empresa nao existe');
         dispatch(VincularEmpresaRequest(response.data));
         toast.success('Empresa cadastrada com sucesso!');
         history.push('/dashboard');
@@ -227,15 +253,33 @@ function Empresa() {
             multiline
           />
         </div>
-        <div className="botao">
-          <button type="button" onClick={() => history.push('/dashboard')}>
-            <MdArrowBack size={20} color="#37759e" />
-            VOLTAR
-          </button>
-          <button type="submit">
-            <MdCheck size={20} color="#37759e" />
-            SALVAR
-          </button>
+        <strong>Tipo de pagamento:</strong>
+        <div className="footer">
+          <div className='pagamento' >
+            {pagamentos.map( pagamento => (
+              <button
+              onClick={() => handleSelectItem(pagamento)}
+              type="button"
+              className={
+                pagamentoSelecionado.find(pag => pag.id === pagamento.id)
+                  ? 'selecionado'
+                  : 'pagamentos'
+              }
+            >
+              {pagamento.tipo_pagamento}
+            </button>
+            ))}
+          </div>
+          <div className="botao">
+            <button type="button" onClick={() => history.push('/dashboard')}>
+              <MdArrowBack size={20} color="#37759e" />
+              VOLTAR
+            </button>
+            <button type="submit">
+              <MdCheck size={20} color="#37759e" />
+              SALVAR
+            </button>
+          </div>
         </div>
       </Form>
     </Container>

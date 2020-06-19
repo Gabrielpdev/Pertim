@@ -87,9 +87,11 @@ export const AddButton = styled.button`
   border: 0;
   background: #9ed8ff;
 
-  width: 220px;
+  width: 160px;
   height: 30px;
   border-radius: 15px;
+
+  padding: 10px;
 
   color: #0b639e;
 
@@ -140,7 +142,7 @@ export const Funionamentos = styled(PerfectScrollBar)`
       }
     }
 
-    > button.funcionamentos {
+    > button.entregas {
       display: flex;
       flex-direction: column;
 

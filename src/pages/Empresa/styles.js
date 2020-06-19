@@ -1,8 +1,8 @@
 import styled from 'styled-components';
+import { darken } from 'polished'
 
 export const Container = styled.div`
   max-width: 700px;
-  max-height: 700px;
   margin: 50px auto;
   background: #fff;
   border-radius: 25px;
@@ -32,28 +32,6 @@ export const Container = styled.div`
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-gap: 0 20px;
-    }
-
-    div.botao {
-      max-width: 200px;
-
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-
-      margin: 10px 0 0 auto;
-      button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 3px 10px;
-        border: 0;
-        background: #9ed8ff;
-        border-radius: 10px;
-
-        color: #0b639e;
-      }
     }
 
     div {
@@ -93,6 +71,100 @@ export const Container = styled.div`
 
         ::-webkit-input-placeholder {
           color: #37759e;
+        }
+      }
+    }
+
+    > strong {
+      display: block;
+      margin: 10px 0 0 0;
+      color: #37759e;
+      font-size: 15px;
+    }
+
+    div.footer{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+
+      div.botao {
+        max-height: 25px;
+        min-width: 190px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        margin-top: auto;
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          padding: 3px 10px;
+          border: 0;
+          background: #9ed8ff;
+          border-radius: 10px;
+
+          color: #0b639e;
+        }
+      }
+
+      div.pagamento {
+        display: flex;
+        flex-direction: column;
+
+        text-align: left;
+
+        border-radius: 5px;
+
+        width: 100%;
+        max-width: 250px;
+
+        background: #dbefff;
+
+        > button.pagamentos {
+          display: flex;
+          flex-direction: column;
+
+          background: #dbefff;
+          border-radius: 5px;
+          border: 0;
+
+          margin: 5px 20px;
+          padding: 5px;
+
+          color: #0b639e;
+
+          &:hover {
+            background: #fff;
+          }
+        }
+
+        > button.selecionado {
+          display: flex;
+          flex-direction: column;
+
+          text-align: left;
+
+          background: #fff;
+          border-radius: 5px;
+          border: 1px solid #0b639e;
+          color: #0b639e;
+
+          margin: 5px 20px;
+          padding: 5px;
+
+          &:hover {
+            background: #fff;
+          }
+        }
+
+        > text {
+          margin: 2px 0;
+          color: #0b639e;
+          font-size: 20px;
         }
       }
     }

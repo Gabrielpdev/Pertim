@@ -25,9 +25,15 @@ export default function Dashboard() {
             >
               Funcionamento
             </button>
-            <button type="button">Entrega</button>
-            <button type="button">Produto</button>
-            <button type="button">Perfil do proprietário</button>
+            <button type="button" onClick={() => history.push('/entrega')}>
+              Entrega
+            </button>
+            <button type="button" onClick={() => history.push('/produto')}>
+              Produto
+            </button>
+            <button type="button" onClick={() => history.push('/perfil')}>
+              Perfil do proprietário
+            </button>
           </div>
 
           <div className="empresa">
@@ -38,18 +44,35 @@ export default function Dashboard() {
                 alt={empresa.nome}
               />
             </div>
-            <span>{empresa.bio}</span>
-            <span>Telefone: {empresa.telefone}</span>
-            <span>Whatsapp: {empresa.whatsapp}</span>
-            <span>
-              Instagram: {empresa.instagram ? empresa.instagram : '----'}
-            </span>
-            <span>
-              Facebook: {empresa.facebook ? empresa.facebook : '----'}
-            </span>
-            <span>Tempo Máximo: {empresa.tempo_max}</span>
-            <span>Tempo Mínimo: {empresa.tempo_min}</span>
-            <span>Valor da entrega: {empresa.valor_entrega}</span>
+
+            <strong>{empresa.bio}</strong>
+
+            <div className="empresaInfo">
+              <div className="esquerda">
+              <strong> Telefone:</strong><span> {empresa.telefone}</span>
+                <strong> Whatsapp: </strong><span>{empresa.whatsapp}</span>
+
+                <strong> Instagram:</strong> <span>{empresa.instagram ? empresa.instagram : '----'}
+                </span>
+
+                <strong> Facebook:</strong> <span>{empresa.facebook ? empresa.facebook : '----'}
+                </span>
+              </div>
+
+              <div className="meio">
+                <strong>Tempo Máximo:</strong> <span>{empresa.tempo_max}</span>
+                <strong>Tempo Mínimo:</strong><span> {empresa.tempo_min}</span>
+                <strong>Valor da entrega: </strong><span>{empresa.valor_entrega}</span>
+              </div>
+
+              <div className="direita">
+                <strong>Tipos de pagamento: {empresa.pagamento.map( pagamento => (
+                  <li key={pagamento.id} >{pagamento.tipo_pagamento}</li>
+                ))} </strong>
+              </div>
+            </div>
+
+
             <div className="informacoes">
               {empresa.endereco[0] ? (
                 <div className="endereco">
@@ -65,13 +88,13 @@ export default function Dashboard() {
               {empresa.funcionamento[0] ? (
                 <div className="funcionamento">
                   <strong>Funcionamento:</strong>
-                  <span>Seg: 08:00 - 18:00</span>
-                  <span>Ter: 08:00 - 18:00</span>
-                  <span>Qua: 08:00 - 18:00</span>
-                  <span>Qui: 08:00 - 18:00</span>
-                  <span>Sex: 08:00 - 18:00</span>
-                  <span>Sab: 08:00 - 18:00</span>
-                  <span>Dom: 08:00 - 18:00</span>
+                  {empresa.funcionamento.map((funcionamento) => (
+                    <span>
+                      {funcionamento.dia.nome.substr(0, 3)}:{' '}
+                      {funcionamento.funcionamento.inicio.substr(0, 5)} -{' '}
+                      {funcionamento.funcionamento.fim.substr(0, 5)}
+                    </span>
+                  ))}
                 </div>
               ) : (
                 <strong>Nenhum horário de funcionamento cadastrado</strong>
@@ -79,13 +102,13 @@ export default function Dashboard() {
               {empresa.entrega[0] ? (
                 <div className="entrega">
                   <strong>Entrega:</strong>
-                  <span>Seg: 08:00 - 18:00</span>
-                  <span>Ter: 08:00 - 18:00</span>
-                  <span>Qua: 08:00 - 18:00</span>
-                  <span>Qui: 08:00 - 18:00</span>
-                  <span>Sex: 08:00 - 18:00</span>
-                  <span>Sab: 08:00 - 18:00</span>
-                  <span>Dom: 08:00 - 18:00</span>
+                  {empresa.entrega.map((entrega) => (
+                    <span>
+                      {entrega.dia.nome.substr(0, 3)}:{' '}
+                      {entrega.entrega.inicio.substr(0, 5)} -{' '}
+                      {entrega.entrega.fim.substr(0, 5)}
+                    </span>
+                  ))}
                 </div>
               ) : (
                 <strong>Nenhum horário de entrega cadastrado</strong>
